@@ -1,6 +1,5 @@
 name: Update Discord Bot Status
 
-# Esegui l'azione ogni volta che si fa push sul branch principale
 on:
   push:
     branches:
@@ -11,26 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Controlla il repository
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Imposta l'ambiente Python
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
 
-      # Installa la libreria requests
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests
 
-      # Esegui lo script Python per aggiornare lo stato
       - name: Run bot status updater
         env:
-          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}  # Token segreto
-          STATUS_MESSAGE: ${{ secrets.STATUS_MESSAGE }}  # Messaggio di stato
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}  # Passa il token come variabile d'ambiente
+          STATUS_MESSAGE: ${{ secrets.STATUS_MESSAGE }}  # Passa il messaggio come variabile d'ambiente
         run: |
           python main.py
